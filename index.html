@@ -415,24 +415,97 @@ body::before {
 }
 
 /* ─── TEACHING ─── */
-.teaching-item {
-  border-left: 2px solid var(--border);
-  padding: 16px 0 16px 22px;
-  margin-bottom: 20px;
-  transition: border-color 0.3s;
+.teaching-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.teaching-item:hover { border-left-color: var(--purple); }
+
+.teaching-item {
+  padding: 20px 24px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.teaching-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  border-radius: 10px 0 0 10px;
+}
+.teaching-item:hover {
+  border-color: var(--border-light);
+  background: var(--surface-raised);
+}
+
+.teaching-item[data-c="accent"]::before { background: var(--accent); }
+.teaching-item[data-c="accent"]:hover { border-color: rgba(56,189,248,0.3); }
+.teaching-item[data-c="purple"]::before { background: var(--purple); }
+.teaching-item[data-c="purple"]:hover { border-color: rgba(167,139,250,0.3); }
+.teaching-item[data-c="orange"]::before { background: var(--orange); }
+.teaching-item[data-c="orange"]:hover { border-color: rgba(251,146,60,0.3); }
+
+.teaching-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
 
 .teaching-item h3 {
   font-family: 'JetBrains Mono', monospace;
   font-size: 1.08rem;
   font-weight: 600;
-  margin-bottom: 6px;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
 }
+
+.teaching-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.teaching-badge.badge-current {
+  background: var(--accent-glow);
+  color: var(--accent);
+  border: 1px solid rgba(56,189,248,0.15);
+}
+.teaching-badge.badge-past {
+  background: var(--purple-glow);
+  color: var(--purple);
+  border: 1px solid rgba(167,139,250,0.15);
+}
+.teaching-badge.badge-mentorship {
+  background: var(--orange-glow);
+  color: var(--orange);
+  border: 1px solid rgba(251,146,60,0.15);
+}
+
 .teaching-item p {
   color: var(--text-dim);
   font-size: 1.05rem;
   line-height: 1.7;
+}
+.teaching-item a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(56,189,248,0.4);
+  transition: border-color 0.3s;
+}
+.teaching-item a:hover {
+  border-bottom-color: var(--accent);
 }
 
 /* ─── FOOTER ─── */
@@ -505,7 +578,7 @@ footer .footer-links a:hover { color: var(--accent); }
         Researcher at the intersection of <strong>Computer Vision</strong>, <strong>IoT</strong>, and <strong>Energy Resilience</strong>.
       </p>
       <div class="hero-detail">
-        <p>My work develops low-cost, high-accuracy sensing and analytics systems tailored for sub-Saharan Africa. I specialize in vision-based transit monitoring, air quality sensor networks, and building-scale energy forecasting to inform urban planning and climate adaptation. Outside of research, I’m an avid hiker and runner.</p>
+        <p>My work develops low-cost, high-accuracy sensing and analytics systems tailored for sub-Saharan Africa. I specialize in vision-based transit monitoring, air quality sensor networks, and building-scale energy forecasting to inform urban planning and climate adaptation. Outside of research, I'm an avid hiker and runner.</p>
       </div>
       <div class="hero-actions">
         <a href="files/papers/Kyatha_Nthenya_CV.pdf" class="btn-cv primary" download>
@@ -581,7 +654,6 @@ footer .footer-links a:hover { color: var(--accent); }
       <div class="pub-item">
         <div class="pub-venue-row">
           <span class="pub-venue venue-conf">Workshop · NeurIPS 2025</span>
-          <!-- <span class="pub-year">2025</span> -->
         </div>
         <div class="pub-title">Recovering Origin–Destination Flows from Bus CCTV: Early Results from Nairobi and Kigali</div>
         <div class="pub-authors"><span class="me">N. Kyatha</span> and J. Taneja</div>
@@ -596,14 +668,12 @@ footer .footer-links a:hover { color: var(--accent); }
       <div class="pub-item">
         <div class="pub-venue-row">
           <span class="pub-venue venue-poster">Poster · IEEE GHTC 2025</span>
-          <!-- <span class="pub-year">2025</span> -->
         </div>
         <div class="pub-title">Breathe Easy On-Board & Beyond: Real-Time, Energy-Aware Solar IoT Air Monitors — Bus Stop to Cabin</div>
         <div class="pub-authors"><span class="me">N. Kyatha</span>, A. Bartlett, J. Taneja, and R. Peltier</div>
         <div class="pub-journal">IEEE Global Humanitarian Technology Conference (GHTC) — Abstract Accepted</div>
         <div class="pub-links">
            <a href="files/papers/breathe.pdf" class="pub-link">Abstract PDF</a>
-           <!-- <a href="files/papers/breathe_poster.pdf" class="pub-link">Poster</a> -->
           <a href="air_quality.html" class="pub-link">Project</a>
         </div>
       </div>
@@ -614,19 +684,18 @@ footer .footer-links a:hover { color: var(--accent); }
         </div>
         <div class="pub-title">Privacy-by-Architecture for Passenger Counting in Growing Economies</div>
         <div class="pub-authors"><span class="me">N. Kyatha</span>, N. Kyatha, and J. Taneja</div>
-        <div class="pub-journal">International Workshop on Biometrics and Forensics (IWBF) — Position Paper Accepted </div>
+        <div class="pub-journal">International Workshop on Biometrics and Forensics (IWBF) — Position Paper Accepted</div>
         <div class="pub-links">
           <a href="files/papers/PrivacybyDesign_v1.pdf" class="pub-link">Paper</a>
-          <!-- <a href="files/papers/privacy_poster.pdf" class="pub-link">Poster</a> -->
           <a href="privacy.html" class="pub-link">Project</a>
         </div>
       </div>
-            
     </div>
 
     <!-- Under Review -->
     <div class="sub-divider">Under Review</div>
 
+    <div class="pub-list">
       <div class="pub-item">
         <div class="pub-venue-row">
           <span class="pub-venue venue-review">Under Review</span>
@@ -656,21 +725,36 @@ footer .footer-links a:hover { color: var(--accent); }
       <h2>Teaching & Mentorship</h2>
     </div>
 
-    <div class="teaching-item" style="border-left-color: var(--accent);">
-      <h3>Graduate TA — PEaRCE Ethics Simulations <span style="font-size:0.82rem; color:var(--accent); font-weight:400;">Spring 2026 · Current</span></h3>
-      <p>Teaching assistant for the <a href="https://pearce-sim.org/" target="_blank" style="color:var(--accent); text-decoration:none; border-bottom:1px dashed rgba(56,189,248,0.4);">PEaRCE</a> (Platform for Ethical and Responsible Computing Education) project — an NSF-funded interactive simulation platform developed at UMass CICS. Guiding students through scenario-based ethical decision-making exercises integrated into technical CS courses.</p>
+    <div class="sub-divider">Teaching Assistantship</div>
+
+    <div class="teaching-list">
+      <div class="teaching-item" data-c="accent">
+        <div class="teaching-header">
+          <span class="teaching-badge badge-current">Spring 2026 · Current</span>
+        </div>
+        <h3>Graduate TA — PEaRCE Ethics Simulations</h3>
+        <p>Teaching assistant for the <a href="https://pearce-sim.org/" target="_blank">PEaRCE</a> (Platform for Ethical and Responsible Computing Education) project — an NSF-funded interactive simulation platform developed at UMass CICS. Guiding students through scenario-based ethical decision-making exercises integrated into technical CS courses.</p>
+      </div>
+
+      <div class="teaching-item" data-c="purple">
+        <div class="teaching-header">
+          <span class="teaching-badge badge-past">Previous</span>
+        </div>
+        <h3>Graduate Teaching Assistant</h3>
+        <p>Mentored researchers in PCB assembly and calibration for environmental sensor nodes.</p>
+      </div>
     </div>
 
-    <div class="teaching-item">
-      <h3>Graduate Teaching Assistant <span style="font-size:0.82rem; color:var(--text-muted); font-weight:400;">Previous</span></h3>
-      <p>Mentored researchers in PCB assembly and calibration for environmental sensor nodes.</p>
-    </div>
+    <div class="sub-divider">Undergraduate Mentorship</div>
 
-    <div class="sub-divider" style="margin-top:36px;">Undergraduate Mentorship</div>
-
-    <div class="teaching-item" style="border-left-color: var(--orange);">
-      <h3>Driver Behaviour Analysis — Undergraduate Research <span style="font-size:0.82rem; color:var(--orange); font-weight:400;">Spring 2026</span></h3>
-      <p>Advising/guiding an undergraduate student exploring anomalous driving pattern detection using AnomalyClip on dashcam footage from Nairobi and Kigali transit fleets. The project extends the vision-based transit analytics pipeline to driver safety monitoring using zero-shot vision-language models.</p>
+    <div class="teaching-list">
+      <div class="teaching-item" data-c="orange">
+        <div class="teaching-header">
+          <span class="teaching-badge badge-mentorship">Spring 2026</span>
+        </div>
+        <h3>Driver Behaviour Analysis — Undergraduate Research</h3>
+        <p>Advising an undergraduate student exploring anomalous driving pattern detection using AnomalyClip on dashcam footage from Nairobi and Kigali transit fleets. The project extends the vision-based transit analytics pipeline to driver safety monitoring using zero-shot vision-language models.</p>
+      </div>
     </div>
   </section>
 
